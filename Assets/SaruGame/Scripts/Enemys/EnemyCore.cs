@@ -50,6 +50,13 @@ namespace Saru.Enemys
                     IsEnemyAliveable.Value = false;
                 });
 
+            /// 敵が死んだときの処理
+            OnEnemyDead
+                .Subscribe(_ =>
+                {
+                    ScoreManager.Instance.AddSocre(10);
+                });
+
             /// 敵のxが-10以下のとき死ぬ処理
             transform.ObserveEveryValueChanged(x => x.position)
                 .Select(pos => pos.x)
