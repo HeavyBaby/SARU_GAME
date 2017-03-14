@@ -42,12 +42,20 @@ namespace Saru.Enemys
         {
             IsEnemyAliveable.Value = true;
 
+            /// 敵がダメージを受けたときの処理
             OnEnemyDamage
                 .TakeUntil(OnEnemyDead)
                 .Subscribe(_ =>
                 {
                     IsEnemyAliveable.Value = false;
                 });
+
+            /// 敵のxが-10以下のとき死ぬ処理
+            transform.ObserveEveryValueChanged(x => x.position)
+                .Select(pos => pos.x)
+                .Where(x => x < -10.0f)
+                .Subscribe(_ => Destroy(gameObject));
+
         }
 
         void OnDestroy()
