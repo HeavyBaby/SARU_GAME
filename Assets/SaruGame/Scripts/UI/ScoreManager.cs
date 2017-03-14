@@ -28,7 +28,6 @@ public class ScoreManager : SingletonMonoBehaviour<ScoreManager> {
     void Awake()
     {
         _score.Value = 0;
-
     }
 
     void Start()

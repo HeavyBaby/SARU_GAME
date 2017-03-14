@@ -22,12 +22,16 @@ namespace Saru.Enemys
             }
         }
 
+
         public IObservable<bool> OnEnemyDead
         {
             get { return IsEnemyAliveable.Where(x => !x); }
         }
 
-
+        /// <summary>
+        /// ダメージを与える。
+        /// </summary>
+        /// <param name="damage">ダメージの情報</param>
         public void ApplyDamage(DamageInfo damage)
         {
             if(_enemyDamageSubject != null)
