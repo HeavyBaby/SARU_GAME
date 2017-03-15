@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UniRx;
 using Saru.Damages;
+using Saru.GameManager;
 
 namespace Saru.Enemys
 {
@@ -46,6 +47,8 @@ namespace Saru.Enemys
         {
             IsEnemyAliveable.Value = true;
 
+            var scoreManager = ScoreManager.Instance;
+
             /// 敵がダメージを受けたときの処理
             OnEnemyDamage
                 .TakeUntil(OnEnemyDead)
@@ -58,7 +61,7 @@ namespace Saru.Enemys
             OnEnemyDead
                 .Subscribe(_ =>
                 {
-                    ScoreManager.Instance.AddSocre(10);
+                    scoreManager.AddSocre(10);
                 });
 
             /// 敵のxが-10以下のとき死ぬ処理
@@ -71,7 +74,8 @@ namespace Saru.Enemys
 
         void OnDestroy()
         {
-            _enemyDamageSubject.OnCompleted();
+            if(_enemyDamageSubject != null) _enemyDamageSubject.OnCompleted();
+
         }
     }
 }
